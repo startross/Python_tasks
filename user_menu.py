@@ -13,8 +13,8 @@ def menu(login):
         row = database_accessor.select_row("users",login);
         print("Amount of your money: ",row[2]);
         print("Your stocks:");
-        flag = database_accessor.show_table(login);
-        if flag == 0:
+        user_stocks_correct = database_accessor.show_table(login);
+        if user_stocks_correct == 0:
             print("You have not got stocks");
         return 1;
     elif int(num) == 2:
