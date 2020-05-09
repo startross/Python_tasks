@@ -8,9 +8,9 @@ def create_user():
     table = "users";
     i = 1;
     while i <= 3:
-        flag = 1;
+        is_login_correct = 1;
         print("REGISTRATION");
-        while flag:
+        while is_login_correct:
             login = input("Enter your login: ");
             row = database_accessor.select_row(table,login);
             if row == None:
@@ -18,7 +18,6 @@ def create_user():
             print("Sorry, this login is busy.");
         password = input("Enter your password: ");
         money = input("What amount do you want to save for your acoount? ");
-        print();
         database_accessor.insert_row(table,login,password,money);
         row = database_accessor.select_row(table,login);
         if row != None:
@@ -33,8 +32,8 @@ def create_user():
 def user_type():
     table = "users";
     user_tp = "user";
-    flag = 1;
-    while flag == 1:
+    is_user_correct = 1;
+    while is_user_correct == 1:
         ans_type = input("Are you admin? ");
         if ans_type == "yes":
             psw = input("Enter password: ");
@@ -85,29 +84,29 @@ def buy(login):
     if row == None:
         return 0;
     money = row[2];
-    flag1 = 0;
-    while flag1 == 0:
+    is_company_correct = 0;
+    while is_company_correct == 0:
         company = input("Which company.s stocks do you want to buy? ");
         if company == "no":
             return 1;
         row = database_accessor.select_row("stocks",company);
         if row == None:
-            flag1 = 0;
+            is_company_correct = 0;
             print("There is no such company in the database. Try again.");
         else:
-            flag1 = 1;
+            is_company_correct = 1;
     id_company = row[1];
     price = row[2];
     stocks = row[3];
     amount = input("How many stocks do you want to buy? ");
-    flag2 = 0;
-    while flag2 == 0:
-        flag2 = 1;
+    amount_of_stocks_correct = 0;
+    while amount_of_stocks_correct == 0:
+        amount_of_stocks_correct = 1;
         if int(amount)*price > money:
-            flag2 = 0;
+            amount_of_stocks_correct = 0;
             amount = input("Not enough money. Enter again: ");
         if int(amount) > stocks:
-            flag2 = 0;
+            amount_of_stocks_correct = 0;
             amount = input("Wrong quantity stocks. Enter again: ");
     row = database_accessor.select_row(login,company);
     if row == None:
@@ -129,25 +128,25 @@ def sell(login):
     row = database_accessor.select_row("users",login);
     if row == None:
         return 0;
-    flag1 = 0;
-    while flag1 == 0:
+    is_company_correct = 0;
+    while is_company_correct == 0:
         company = input("Which company.s stocks do you want to sell? ");
         if company == "no":
             return 1;
         row = database_accessor.select_row(login,company);
         if row == None:
-            flag1 = 0;
+            is_company_correct = 0;
             print("There is no such company in the database. Try again.");
         else:
-            flag1 = 1;
+            is_company_correct = 1;
     id_company = row[1];
     stocks = row[2];
     amount = input("How many stocks do you want to sell? ");
-    flag2 = 0;
-    while flag2 == 0:
-        flag2 = 1;
+    amount_of_stocks_correct = 0;
+    while amount_of_stocks_correct == 0:
+        amount_of_stocks_correct = 1;
         if int(amount) > stocks:
-            flag2 = 0;
+            amount_of_stocks_correct = 0;
             amount = input("Wrong quantity stocks. Enter again: ");
     if int(amount) == stocks:
         database_accessor.delete_row(login,company,id_company);
