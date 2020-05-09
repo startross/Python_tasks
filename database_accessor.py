@@ -16,28 +16,25 @@ class database_accessor:
 
     def init_table(self,table):
         if table == "stocks":
-            self.cursor.execute("INSERT INTO stocks VALUES ('Apple','AAPL','425','10000')");
-            self.cursor.execute("INSERT INTO stocks VALUES ('Bank of America','BAC','40','8000')");
-            self.cursor.execute("INSERT INTO stocks VALUES ('Microsoft','MSFT','306','15000')");
-            self.cursor.execute("INSERT INTO stocks VALUES ('Pfizer','PFE','67','3000')");
-            self.cursor.execute("INSERT INTO stocks VALUES ('Facebook','FB','308','12000')");
-            self.cursor.execute("INSERT INTO stocks VALUES ('Twitter','TWTR','47','30000')");
-            self.cursor.execute("INSERT INTO stocks VALUES ('Intel','INTC','108','17000')");
-            self.cursor.execute("INSERT INTO stocks VALUES ('NVIDIA','NVDA','486','9000')");
-            self.cursor.execute("INSERT INTO stocks VALUES ('The Gap','GPS','11','60000')");
-            self.cursor.execute("INSERT INTO stocks VALUES ('The Walt Disney','DIS','186','20000')");
-            self.cursor.execute("INSERT INTO stocks VALUES ('Starbucks','SBUX','127','8000')");
-            self.cursor.execute("INSERT INTO stocks VALUES ('General Motors','GM','36','15000')");
-            self.cursor.execute("INSERT INTO stocks VALUES ('Oracle','ORCL','98','13000')");
-            self.cursor.execute("INSERT INTO stocks VALUES ('HP','HPQ','27','19000')");
-            self.cursor.execute("INSERT INTO stocks VALUES ('Visa','V','302','7000')");
+            f = open("stocks.txt","r");
+            for line in f:
+                line = line.strip().split("/");
+                company = line[0];
+                id_company = line[1];
+                price = line[2];
+                stocks_amount = line[3];
+                self.cursor.execute(f"INSERT INTO {table} VALUES (?,?,?,?)",(company,id_company,int(price),int(stocks_amount)));
+            f.close;
             self.conn.commit();
         elif table == "users":
-            self.cursor.execute("INSERT INTO users VALUES ('startross','12345','10000')");
-            self.cursor.execute("INSERT INTO users VALUES ('mindhunter','23456','5000')");
-            self.cursor.execute("INSERT INTO users VALUES ('jonny','34567','12000')");
-            self.cursor.execute("INSERT INTO users VALUES ('ninja','45678','7000')");
-            self.cursor.execute("INSERT INTO users VALUES ('kelly','56789','4000')");
+            f = open("users.txt","r");
+            for line in f:
+                line = line.strip().split("/");
+                login = line[0];
+                password = line[1];
+                money = line[2];
+                self.cursor.execute(f"INSERT INTO {table} VALUES (?,?,?)",(login,password,int(money)));
+            f.close;
             self.conn.commit();
 
     def show_table(self,table):
