@@ -13,8 +13,8 @@ def output_table():
             print("Table with this name does not exist");
             return 1;
         else:
-            user_stocks = database_accessor.show_table(table);
-            if user_stocks == 0:
+            user_stocks_correct = database_accessor.show_table(table);
+            if user_stocks_correct == 0:
                 print("User has not got stocks");
 
 def update_table():
